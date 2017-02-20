@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Request;
+use estoque\Produto;
 
 class ProdutoController extends Controller{
 
@@ -13,31 +14,47 @@ class ProdutoController extends Controller{
 
 
 	public function lista(){
-		$produtos = DB::select('select * from produtos');
+		$produtos = Produto::all();
 		return view('produto.listagem')->with('produtos', $produtos);
 	}
 
-	public function mostra(){
-		//$id = Request::input('id', '1');
-		$id = Request::route('id', '1');
-		$produto = DB::select('select * from produtos where id = ?', [$id]);
-		return view('produto.detalhe')->with('produto', $produto[0]);
+	public function mostra($id){
+		//$id = Request::route('id', '1');
+		$produto = Produto::find($id);
+		return view('produto.detalhe')->with('produto', $produto);
 	}
 
 	public function novo(){
-		return view('produto.formulario');
+		return view('produto.formulario')->with('produto', new Produto());
+	}
+
+
+	public function alterar($id){
+		return view('produto.formulario')->with('produto', Produto::find($id));
 	}
 
 	public function adicionar(){
-		$nome = Request::input('nome', '');
-		$valor = Request::input('valor', '');
-		$quantidade = Request::input('quantidade', '');
-		$descricao = Request::input('descricao', '');
+		/*$params = Request::all();
+		$produto = new Produto($params);
 
-		DB::insert('insert into produtos (nome, quantidade, valor, descricao) values (?,?,?,?)',
-			array($nome, $quantidade, $valor, $descricao));
-		//return view('produto.adicionado')->with('nome', $nome);
-		//return redirect('/produtos')->withInput();
+		$produto->save();*/
+
+		Produto::create(Request::all());
+
+		return redirect()
+					  ->action('ProdutoController@lista')
+					  ->withInput(Request::only('nome'));
+	}
+
+
+
+	public function salvar(){
+		$id = Request::input('id');
+		if(isset($id)){
+			Produto::find($id)->update(Request::all());
+		} else {	
+			Produto::create(Request::all());
+		}
 
 		return redirect()
 					  ->action('ProdutoController@lista')
@@ -49,5 +66,13 @@ class ProdutoController extends Controller{
 		$produtos = DB::select('select * from produtos');
 		return response()->json($produtos);
 	}
+
+	public function remove($id){
+		$produto = Produto::find($id);
+		$produto->delete();
+		//return redirect('/produtos');	
+		return redirect()->action('ProdutoController@lista');
+	}
+	
 }
 

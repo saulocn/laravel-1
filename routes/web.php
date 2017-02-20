@@ -18,6 +18,9 @@ Route::get('/', function () {
 
 Route::get('/produtos', 'ProdutoController@lista');
 Route::get('/produtos/mostra/{id}', 'ProdutoController@mostra');
+Route::get('/produtos/atualizar/{id}', 'ProdutoController@alterar');
+Route::get('/produtos/remove/{id}', 'ProdutoController@remove');
 Route::get('/produtos/novo', 'ProdutoController@novo');
 Route::post('/produtos/adicionar', 'ProdutoController@adicionar');
+Route::post('/produtos/salvar', 'ProdutoController@salvar');
 Route::get('/produtos/json', 'ProdutoController@listaJson');

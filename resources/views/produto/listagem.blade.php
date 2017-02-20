@@ -30,6 +30,13 @@
 					<a href="/produtos/mostra/{{ $produto->id}}" >
 						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					</a>
+					<a href="/produtos/remove/{{ $produto->id}}" >
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</a>
+					<a href="/produtos/atualizar/{{ $produto->id}}" >
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+					</a>
+				</td>
 				
 			</tr>
 			
@@ -41,7 +48,7 @@
 
 @if(old('nome'))
 <div class="alert alert-success">
-  Produto {{old('nome')}} adicionado!
+  Produto {{old('nome')}} salvo!
 </div>
 @endif
 @stop
