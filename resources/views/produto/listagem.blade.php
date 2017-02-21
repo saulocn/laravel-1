@@ -15,6 +15,7 @@
 			<th>Nome</th>
 			<th>Descrição</th>
 			<th>Quantidade</th>
+			<th>Tamannho</th>
 			<th>Detalhes</th>
 		</thead>
 		<tbody>
@@ -26,6 +27,7 @@
 				<td>{{ $produto->nome}}</td>
 				<td>{{ $produto->descricao}}</td>
 				<td>{{ $produto->quantidade}}</td>
+				<td>{{ $produto->tamanho}}</td>
 				<td>
 					<a href="/produtos/mostra/{{ $produto->id}}" >
 						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
